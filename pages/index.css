@@ -1,0 +1,37 @@
+@import url(../vendor/normalize.css);
+@import url(../variables/variables.css);
+@import url(../fonts/inter.css);
+
+@import url(../blocks/page/page.css);
+
+@import url(../blocks/header/header.css);
+@import url(../blocks/header/__logo/header__logo.css);
+@import url(../blocks/header/__divider/header__divider.css);
+
+@import url(../blocks/footer/footer.css);
+@import url(../blocks/footer/__info/footer__info.css);
+
+@import url(../blocks/places/places.css);
+@import url(../blocks/place-card/place-card.css);
+@import url(../blocks/place-card/__description-like-btn/place-card__description-like-btn.css);
+@import url(../blocks/place-card/__description-title/place-card__description-title.css);
+@import url(../blocks/place-card/__description/place-card__description.css);
+@import url(../blocks/place-card/__illustration/place-card__illustration.css);
+
+@import url(../blocks/traveller/traveller.css);
+@import url(../blocks/traveller/__add-image-btn/traveller__add-image-btn.css);
+@import url(../blocks/traveller/__illustration/traveller__illustration.css);
+@import url(../blocks/traveller/__info-description/traveller__info-description.css);
+@import url(../blocks/traveller/__info-full-name-edit-btn/traveller__info-full-name-edit-btn.css);
+@import url(../blocks/traveller/__info-full-name-label/traveller__info-full-name-label.css);
+@import url(../blocks/traveller/__info-full-name/traveller__info-full-name.css);
+@import url(../blocks/traveller/__info/traveller__info.css);
+
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/popup/__container-close-btn/popup__container-close-btn.css);
+@import url(../blocks/popup/__container-form/popup__container-form.css);
+@import url(../blocks/popup/__container-input/popup__container-input.css);
+@import url(../blocks/popup/__container-save-btn/popup__container-save-btn.css);
+@import url(../blocks/popup/__container-title/popup__container-title.css);
+@import url(../blocks/popup/__container/popup__container.css);

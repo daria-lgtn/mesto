@@ -1,0 +1,25 @@
+.traveller__add-image-btn {
+    min-width: 282px;
+    height: 50px;
+    border: none;
+    background: inherit;
+    cursor: pointer;
+    background: url(../../../images/plus.svg);
+    background-size: 22px 22px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 2px solid #FFFFFF;
+    border-radius: 2px;
+    transition: opacity 0.3s;
+}
+
+.traveller__add-image-btn:hover {
+    opacity: 0.5;
+}
+
+
+@media screen and (min-width: 880px) {
+    .traveller__add-image-btn {
+        min-width: 150px;
+    }
+}

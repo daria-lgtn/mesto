@@ -1,0 +1,8 @@
+.place-card {
+    color: var(--black);
+    background: var(--white);
+    border-radius: 10px;
+    overflow: hidden;
+    width: fit-content;
+    width: 282px;
+}

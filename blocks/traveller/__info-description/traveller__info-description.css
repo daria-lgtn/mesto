@@ -1,0 +1,14 @@
+.traveller__info-description {
+    margin: 0;
+
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+@media screen and (min-width: 880px) {
+    .traveller__info-description {
+        font-size: 18px;
+        line-height: 22px;
+    }
+}

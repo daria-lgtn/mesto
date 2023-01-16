@@ -1,0 +1,24 @@
+.traveller__info-full-name-edit-btn {
+    min-width: 18px;
+    height: 18px;
+    border: none;
+    background: inherit;
+    cursor: pointer;
+    background: url(../../../images/edit.svg);
+    background-size: 18px 18px;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity 0.3s;
+}
+
+@media screen and (min-width: 880px) {
+    .traveller__info-full-name-edit-btn {
+        background-size: 24px 24px;
+        min-width: 24px;
+        height: 24px;
+    }
+}
+
+.traveller__info-full-name-edit-btn:hover {
+    opacity: 0.5;
+}

@@ -1,0 +1,17 @@
+.traveller__info-full-name-label {
+    margin: 0;
+    margin-left: 24px;
+
+    font-weight: 500;
+    font-size: 27px;
+    line-height: 33px;
+}
+
+@media screen and (min-width: 880px) {
+    .traveller__info-full-name-label {
+        margin-left: 0px;
+
+        font-size: 42px;
+        line-height: 48px;
+    }
+}
