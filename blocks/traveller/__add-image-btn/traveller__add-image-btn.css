@@ -1,8 +1,6 @@
 .traveller__add-image-btn {
     min-width: 282px;
     height: 50px;
-    border: none;
-    background: inherit;
     cursor: pointer;
     background: url(../../../images/plus.svg);
     background-size: 22px 22px;
