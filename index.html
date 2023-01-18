@@ -10,21 +10,8 @@
 
 <body>
     <div class="page">
-        <div class="popup">
-            <div class="popup__container">
-                <button class="popup__container-close-btn"></button>
-                <form class="popup__container-form">
-                    <h2 class="popup__container-title">Редактировать профиль</h2>
-                    <input class="popup__container-input popup__container-input_type_name">
-                    <input class="popup__container-input popup__container-input_type_description">
-                    <button class="popup__container-save-btn">Сохранить</button>
-                </form>
-            </div>
-        </div>
-
         <header class="header">
             <img class="header__logo" src="./images/logo.svg" alt="Логотип 'Место'">
-            <div class="header__divider"></div>
         </header>
 
         <main>
@@ -36,14 +23,14 @@
                             Жак-Ив Кусто
                         </h1>
 
-                        <button class="traveller__info-full-name-edit-btn">
+                        <button type="button" class="traveller__info-full-name-edit-btn">
                         </button>
                     </div>
                     <p class="traveller__info-description">
                         Исследователь океана
                     </p>
                 </div>
-                <button class="traveller__add-image-btn">
+                <button type="button" class="traveller__add-image-btn">
                 </button>
             </section>
 
@@ -52,7 +39,7 @@
                     <img class="place-card__illustration" src="./images/temple.png" alt="Иллюстрация Куршской косы">
                     <div class="place-card__description">
                         <h2 class="place-card__description-title">Карачаевск</h2>
-                        <button class="place-card__description-like-btn">
+                        <button type="button" class="place-card__description-like-btn">
                         </button>
                     </div>
                 </div>
@@ -61,7 +48,7 @@
                     <img class="place-card__illustration" src="./images/field.png" alt="Иллюстрация Куршской косы">
                     <div class="place-card__description">
                         <h2 class="place-card__description-title">Гора Эльбрус</h2>
-                        <button class="place-card__description-like-btn">
+                        <button type="button" class="place-card__description-like-btn">
                         </button>
                     </div>
                 </div>
@@ -70,7 +57,7 @@
                     <img class="place-card__illustration" src="./images/mountain.png" alt="Иллюстрация Куршской косы">
                     <div class="place-card__description">
                         <h2 class="place-card__description-title">Домбай</h2>
-                        <button class="place-card__description-like-btn">
+                        <button type="button" class="place-card__description-like-btn">
                         </button>
                     </div>
                 </div>
@@ -79,7 +66,7 @@
                     <img class="place-card__illustration" src="./images/field.png" alt="Иллюстрация Куршской косы">
                     <div class="place-card__description">
                         <h2 class="place-card__description-title">Гора Эльбрус</h2>
-                        <button class="place-card__description-like-btn">
+                        <button type="button" class="place-card__description-like-btn">
                         </button>
                     </div>
                 </div>
@@ -88,7 +75,7 @@
                     <img class="place-card__illustration" src="./images/mountain.png" alt="Иллюстрация Куршской косы">
                     <div class="place-card__description">
                         <h2 class="place-card__description-title">Домбай</h2>
-                        <button class="place-card__description-like-btn">
+                        <button type="button" class="place-card__description-like-btn">
                         </button>
                     </div>
                 </div>
@@ -97,7 +84,7 @@
                     <img class="place-card__illustration" src="./images/temple.png" alt="Иллюстрация Куршской косы">
                     <div class="place-card__description">
                         <h2 class="place-card__description-title">Карачаевск</h2>
-                        <button class="place-card__description-like-btn">
+                        <button type="button" class="place-card__description-like-btn">
                         </button>
                     </div>
                 </div>
@@ -107,8 +94,20 @@
         <footer class="footer">
             <p lang="en" class="footer__info">&commat; 2022. Mesto Russia</p>
         </footer>
+
+        <div class="popup">
+            <div class="popup__container">
+                <button type="button" class="popup__container-close-btn"></button>
+                <form name="edit" class="popup__container-form">
+                    <h2 class="popup__container-title">Редактировать профиль</h2>
+                    <input name="name" class="popup__container-input popup__container-input_type_name">
+                    <input name="description" class="popup__container-input popup__container-input_type_description">
+                    <button type="submit" class="popup__container-save-btn">Сохранить</button>
+                </form>
+            </div>
+        </div>
     </div>
-    <script src="./js/index.js"></script>
+    <script src="./scripts/script.js"></script>
 </body>
 
 </html>

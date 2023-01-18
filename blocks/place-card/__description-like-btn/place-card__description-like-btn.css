@@ -5,6 +5,7 @@
     border: none;
     cursor: pointer;
     background-image: url(../../../images/like-btn.svg);
+    background-color: inherit;
     transition: opacity 0.3s;
 }
 

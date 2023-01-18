@@ -1,12 +1,11 @@
 @import url(../vendor/normalize.css);
-@import url(../variables/variables.css);
-@import url(../fonts/inter.css);
+@import url(../vendor/variables.css);
+@import url(../vendor/fonts/inter.css);
 
 @import url(../blocks/page/page.css);
 
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
-@import url(../blocks/header/__divider/header__divider.css);
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__info/footer__info.css);

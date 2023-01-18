@@ -8,3 +8,7 @@
 
     padding: 13px 0px;
 }
+
+.popup__container-input:focus {
+    outline: none;
+}

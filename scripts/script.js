@@ -9,22 +9,27 @@ const popupInputDescription = document.querySelector(".popup__container-input_ty
 const pageInputName = document.querySelector(".traveller__info-full-name-label");
 const pageInputDescription = document.querySelector(".traveller__info-description");
 
-popupCloseButton.addEventListener("click", function () {
+function popupClose () {
     popupContainer.classList.remove("popup_opened");
-});
+}
 
-popupOpenButton.addEventListener("click", function () {
+function popupOpen () {
     popupContainer.classList.add("popup_opened");
 
     popupInputName.value = pageInputName.textContent.trim();
     popupInputDescription.value = pageInputDescription.textContent.trim();
-});
+}
 
-popupForm.addEventListener('submit', function (event) {
+popupCloseButton.addEventListener("click", popupClose);
+popupOpenButton.addEventListener("click", popupOpen);
+
+function popupSubmit(event) {
     event.preventDefault();
 
     pageInputName.textContent = popupInputName.value;
     pageInputDescription.textContent = popupInputDescription.value;
 
-    popupContainer.classList.remove("popup_opened");
-});
+    popupClose()
+}
+
+popupForm.addEventListener('submit', popupSubmit);
