@@ -1,19 +1,13 @@
-
 .place-card__description-like-btn {
-    min-width: 22px;
-    height: 19px;
-    border: none;
-    cursor: pointer;
-    background-image: url(../../../images/like-btn.svg);
-    background-color: inherit;
-    transition: opacity 0.3s;
+  min-width: 22px;
+  height: 19px;
+  border: none;
+  cursor: pointer;
+  background-image: url(../../../images/like-btn.svg);
+  background-color: inherit;
+  transition: opacity 0.3s;
 }
 
 .place-card__description-like-btn:hover {
-    opacity: 0.5;
-}
-
-.place-card__description-like-btn:active {
-    opacity: 1;
-    background-image: url(../../../images/like-btn-filled.svg);
+  opacity: 0.5;
 }

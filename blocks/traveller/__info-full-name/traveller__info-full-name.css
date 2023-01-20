@@ -1,11 +1,11 @@
 .traveller__info-full-name {
-    display: flex;
-    gap: 10px;
-    align-items: baseline;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
 }
 
 @media screen and (min-width: 880px) {
-    .traveller__info-full-name {
-        gap: 18px;
-    }
+  .traveller__info-full-name {
+    gap: 18px;
+  }
 }

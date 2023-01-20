@@ -1,14 +1,14 @@
 .traveller__info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
 }
 
 @media screen and (min-width: 880px) {
-    .traveller__info {
-        gap: 16px;
-        align-items: flex-start;
-    }
+  .traveller__info {
+    gap: 16px;
+    align-items: flex-start;
+  }
 }

@@ -1,0 +1,4 @@
+.place-card__description-like-btn_active {
+  opacity: 1;
+  background-image: url(../../../../images/like-btn-filled.svg);
+}

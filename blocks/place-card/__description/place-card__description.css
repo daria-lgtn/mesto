@@ -1,8 +1,8 @@
 .place-card__description {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px 20px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 20px 0px;
 
-    min-height: 79px;
+  min-height: 79px;
 }
