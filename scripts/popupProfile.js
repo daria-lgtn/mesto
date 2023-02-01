@@ -8,7 +8,7 @@ const pageProfileInputDescription = document.querySelector(
   ".traveller__info-description"
 );
 
-const popupProfileContainer = document.querySelector(".popup_type_profile");
+const popupProfileContainer = document.querySelector(".popup_type-profile");
 const popupProfileCloseButton = popupProfileContainer.querySelector(
   ".popup__container-close-btn"
 );
@@ -16,22 +16,22 @@ const popupProfileForm = popupProfileContainer.querySelector(
   ".popup__container-form"
 );
 const popupProfileInputName = popupProfileContainer.querySelector(
-  ".popup__container-input_type_name"
+  ".popup__container-input_type-name"
 );
 const popupProfileInputDescription = popupProfileContainer.querySelector(
-  ".popup__container-input_type_description"
+  ".popup__container-input_type-description"
 );
 
 function popupProfileClose() {
-  popupProfileContainer.classList.remove("popup_opened");
+  return popupClose(popupProfileContainer);
 }
 
 function popupProfileOpen() {
-  popupProfileContainer.classList.add("popup_opened");
-
   popupProfileInputName.value = pageProfileInputName.textContent.trim();
   popupProfileInputDescription.value =
     pageProfileInputDescription.textContent.trim();
+
+  popupOpen(popupProfileContainer);
 }
 
 function popupProfileSubmitHandler(event) {
