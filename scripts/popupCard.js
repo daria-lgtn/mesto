@@ -21,7 +21,7 @@ function cardDelete(event) {
   event.target.parentElement.remove();
 }
 
-function appendCard(info) {
+function createCardElement(info) {
   const cardTemplate = document.querySelector("#place-card").content;
 
   const cardElement = cardTemplate.querySelector(".place-card").cloneNode(true);
@@ -44,6 +44,12 @@ function appendCard(info) {
   cardElement
     .querySelector(".place-card__illustration")
     .addEventListener("click", popupPreviewOpen);
+
+  return cardElement;
+}
+
+function appendCard(info) {
+  const cardElement = createCardElement(info);
 
   const cardsContainer = document.querySelector(".places");
   cardsContainer.prepend(cardElement);
