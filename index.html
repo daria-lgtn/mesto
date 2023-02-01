@@ -39,95 +39,6 @@
         </section>
 
         <section class="places">
-          <div class="place-card">
-            <img
-              class="place-card__illustration"
-              src="./images/temple.png"
-              alt="Иллюстрация Куршской косы"
-            />
-            <div class="place-card__description">
-              <h2 class="place-card__description-title">Карачаевск</h2>
-              <button
-                type="button"
-                class="place-card__description-like-btn"
-              ></button>
-            </div>
-          </div>
-
-          <div class="place-card">
-            <img
-              class="place-card__illustration"
-              src="./images/field.png"
-              alt="Иллюстрация Куршской косы"
-            />
-            <div class="place-card__description">
-              <h2 class="place-card__description-title">Гора Эльбрус</h2>
-              <button
-                type="button"
-                class="place-card__description-like-btn"
-              ></button>
-            </div>
-          </div>
-
-          <div class="place-card">
-            <img
-              class="place-card__illustration"
-              src="./images/mountain.png"
-              alt="Иллюстрация Куршской косы"
-            />
-            <div class="place-card__description">
-              <h2 class="place-card__description-title">Домбай</h2>
-              <button
-                type="button"
-                class="place-card__description-like-btn"
-              ></button>
-            </div>
-          </div>
-
-          <div class="place-card">
-            <img
-              class="place-card__illustration"
-              src="./images/field.png"
-              alt="Иллюстрация Куршской косы"
-            />
-            <div class="place-card__description">
-              <h2 class="place-card__description-title">Гора Эльбрус</h2>
-              <button
-                type="button"
-                class="place-card__description-like-btn"
-              ></button>
-            </div>
-          </div>
-
-          <div class="place-card">
-            <img
-              class="place-card__illustration"
-              src="./images/mountain.png"
-              alt="Иллюстрация Куршской косы"
-            />
-            <div class="place-card__description">
-              <h2 class="place-card__description-title">Домбай</h2>
-              <button
-                type="button"
-                class="place-card__description-like-btn"
-              ></button>
-            </div>
-          </div>
-
-          <div class="place-card">
-            <img
-              class="place-card__illustration"
-              src="./images/temple.png"
-              alt="Иллюстрация Куршской косы"
-            />
-            <div class="place-card__description">
-              <h2 class="place-card__description-title">Карачаевск</h2>
-              <button
-                type="button"
-                class="place-card__description-like-btn"
-              ></button>
-            </div>
-          </div>
         </section>
       </main>
 
@@ -135,7 +46,7 @@
         <p lang="en" class="footer__info">&commat; 2022. Mesto Russia</p>
       </footer>
 
-      <div class="popup">
+      <div class="popup popup_type_profile">
         <div class="popup__container">
           <button type="button" class="popup__container-close-btn"></button>
           <form name="edit" class="popup__container-form">
@@ -154,7 +65,65 @@
           </form>
         </div>
       </div>
+
+      <div class="popup popup_type_card">
+        <div class="popup__container">
+          <button type="button" class="popup__container-close-btn"></button>
+          <form name="edit" class="popup__container-form">
+            <h2 class="popup__container-title">Новое место</h2>
+            <input
+              name="name"
+              placeholder="Название"
+              class="popup__container-input popup__container-input_type_name"
+            />
+            <input
+              name="description"
+              placeholder="Ссылка на картинку"
+              class="popup__container-input popup__container-input_type_link"
+            />
+            <button type="submit" class="popup__container-save-btn">
+              Создать
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="popup popup_type_preview">
+        <div class="popup__container">
+          <button type="button" class="popup__container-close-btn"></button>
+          <div class="popup__container-preview">
+            <img
+              class="popup__container-preview-illustration"
+              src="./images/temple.png"
+              alt="Иллюстрация Куршской косы"
+            />
+            <p class="popup__container-preview-name"></p>
+          </form>
+        </div>
+      </div>
     </div>
-    <script defer src="./scripts/script.js"></script>
+
+    <template id="place-card">
+      <div class="place-card">
+        <img
+          class="place-card__illustration"
+          src="./images/temple.png"
+          alt="Иллюстрация Куршской косы"
+        />
+        <div class="place-card__description">
+          <h2 class="place-card__description-title">Карачаевск</h2>
+          <button
+            type="button"
+            class="place-card__description-like-btn"
+          ></button>
+        </div>
+        <button
+          type="button"
+          class="place-card__delete-btn"
+        ></button>
+      </div>
+    </template> 
+    <script defer src="./scripts/profile.js"></script>
+    <script defer src="./scripts/card.js"></script>
   </body>
 </html>

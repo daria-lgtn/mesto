@@ -1,0 +1,17 @@
+.place-card__delete-btn {
+  min-width: 20px;
+  height: 20px;
+  border: none;
+  cursor: pointer;
+  background-image: url(../../../images/delete-btn.svg);
+  background-color: transparent;
+  transition: opacity 0.3s;
+
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.place-card__delete-btn:hover {
+  opacity: 0.5;
+}
