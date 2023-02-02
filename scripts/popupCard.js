@@ -13,18 +13,21 @@ const popupCardInputLink = popupCardContainer.querySelector(
   ".popup__container-input_type-link"
 );
 
+const cardsContainer = document.querySelector(".places");
+const templateCard = document
+  .querySelector("#place-card")
+  .content.querySelector(".place-card");
+
 function cardToggleLike(event) {
   event.target.classList.toggle("place-card__description-like-btn_active");
 }
 
 function cardDelete(event) {
-  event.target.parentElement.remove();
+  event.target.closest(".place-card").remove();
 }
 
 function createCardElement(info) {
-  const cardTemplate = document.querySelector("#place-card").content;
-
-  const cardElement = cardTemplate.querySelector(".place-card").cloneNode(true);
+  const cardElement = templateCard.cloneNode(true);
 
   cardElement.querySelector(".place-card__illustration").src = info.link;
   cardElement.querySelector(
@@ -43,15 +46,13 @@ function createCardElement(info) {
 
   cardElement
     .querySelector(".place-card__illustration")
-    .addEventListener("click", popupPreviewOpen);
+    .addEventListener("click", () => popupPreviewOpen(info));
 
   return cardElement;
 }
 
 function appendCard(info) {
   const cardElement = createCardElement(info);
-
-  const cardsContainer = document.querySelector(".places");
   cardsContainer.prepend(cardElement);
 }
 

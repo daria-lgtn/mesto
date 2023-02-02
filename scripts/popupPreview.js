@@ -9,14 +9,10 @@ const popupPreviewCloseButton = popupPreviewContainer.querySelector(
   ".popup__container-close-btn"
 );
 
-function popupPreviewOpen(event) {
-  const card = event.target.parentElement;
-  const link = card.querySelector(".place-card__illustration").src;
-  const name = card.querySelector(".place-card__description-title").textContent;
-
-  popupPreviewImage.src = link;
-  popupPreviewImage.alt = `Иллюстрация '${name}'`;
-  popupPreviewName.textContent = name;
+function popupPreviewOpen(data) {
+  popupPreviewImage.src = data.link;
+  popupPreviewImage.alt = `Иллюстрация '${data.name}'`;
+  popupPreviewName.textContent = data.name;
 
   popupOpen(popupPreviewContainer);
 }
