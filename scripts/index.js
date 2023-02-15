@@ -9,14 +9,14 @@ function onEscapeKeyDown(container) {
 function popupClose(container, event) {
   if (!event || event.target === event.currentTarget) {
     container.classList.remove("popup_opened");
-    document.addEventListener("keydown", onEscapeKeyDown);
+    container.addEventListener("keydown", onEscapeKeyDown(container));
   }
 }
 
 function popupOpen(container) {
   container.focus();
   container.classList.add("popup_opened");
-  document.addEventListener("keydown", onEscapeKeyDown);
+  container.addEventListener("keydown", onEscapeKeyDown(container));
 }
 
 function setInputValue(input, value) {
@@ -103,7 +103,7 @@ function popupCardSubmitHandler(event) {
   setInputValue(popupCardInputName, "");
   setInputValue(popupCardInputLink, "");
 
-  appendCard(data);
+  appendCard(cardsContainer, data);
   popupCardClose();
 }
 
