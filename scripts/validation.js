@@ -69,5 +69,5 @@ enableValidation({
     inactiveButtonClass: 'popup__container-save-btn_inactive',
     inputErrorClass: 'popup__container-input_error',
     errorClass: 'popup__container-input-error_active',
-    errorSelector: (name) => `.popup__container-input_type-${name}-error`
+    errorSelector: (name) => `.popup__container-input-${name}-error`
 });
