@@ -17,8 +17,9 @@ function popupPreviewOpen(data) {
   popupOpen(popupPreviewContainer);
 }
 
-function popupPreviewClose() {
-  popupClose(popupPreviewContainer);
+function popupPreviewClose(event) {
+  popupClose(popupPreviewContainer, event);
 }
 
+popupPreviewContainer.addEventListener("click", popupPreviewClose);
 popupPreviewCloseButton.addEventListener("click", popupPreviewClose);

@@ -22,15 +22,14 @@ const popupProfileInputDescription = popupProfileContainer.querySelector(
   ".popup__container-input_type-description"
 );
 
-function popupProfileClose() {
-  return popupClose(popupProfileContainer);
+function popupProfileClose(event) {
+  return popupClose(popupProfileContainer, event);
 }
 
 function popupProfileOpen() {
-  popupProfileInputName.value = pageProfileInputName.textContent.trim();
-  popupProfileInputDescription.value =
-    pageProfileInputDescription.textContent.trim();
-
+  setInputValue(popupProfileInputName, pageProfileInputName.textContent.trim());
+  setInputValue(popupProfileInputDescription, pageProfileInputDescription.textContent.trim());
+  
   popupOpen(popupProfileContainer);
 }
 
@@ -43,6 +42,7 @@ function popupProfileSubmitHandler(event) {
   popupProfileClose();
 }
 
+popupProfileContainer.addEventListener("click", popupProfileClose);
 popupProfileCloseButton.addEventListener("click", popupProfileClose);
 popupProfileOpenButton.addEventListener("click", popupProfileOpen);
 popupProfileForm.addEventListener("submit", popupProfileSubmitHandler);

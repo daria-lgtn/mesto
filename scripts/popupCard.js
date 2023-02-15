@@ -60,12 +60,12 @@ for (let i = 0; i < initialCards.length; i++) {
   appendCard(initialCards[i]);
 }
 
-function popupCardClose() {
-  popupClose(popupCardContainer);
+function popupCardClose(event) {
+  popupClose(popupCardContainer, event);
 }
 
-function popupCardOpen() {
-  popupOpen(popupCardContainer);
+function popupCardOpen(event) {
+  popupOpen(popupCardContainer, event);
 }
 
 function popupCardSubmitHandler(event) {
@@ -80,6 +80,7 @@ function popupCardSubmitHandler(event) {
   popupCardClose();
 }
 
+popupCardContainer.addEventListener("click", popupCardClose);
 popupCardCloseButton.addEventListener("click", popupCardClose);
 popupCardOpenButton.addEventListener("click", popupCardOpen);
 popupCardForm.addEventListener("submit", popupCardSubmitHandler);

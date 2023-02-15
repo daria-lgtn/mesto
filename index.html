@@ -48,16 +48,30 @@
       <div class="popup popup_type-profile">
         <div class="popup__container">
           <button type="button" class="popup__container-close-btn"></button>
-          <form name="edit" class="popup__container-form">
+          <form novalidate name="edit" class="popup__container-form">
             <h2 class="popup__container-title">Редактировать профиль</h2>
-            <input
-              name="name"
-              class="popup__container-input popup__container-input_type-name"
-            />
-            <input
-              name="description"
-              class="popup__container-input popup__container-input_type-description"
-            />
+            <label class="popup__container-field">
+              <input
+                name="name"
+                placeholder="Имя"
+                required
+                minlength="2"
+                maxlength="40"
+                class="popup__container-input popup__container-input_type-name"
+              />
+              <span class="popup__container-input-error popup__container-input_type-name-error"></span>
+            </label>
+            <label class="popup__container-field">
+              <input
+                name="description"
+                placeholder="О себе"
+                required
+                minlength="2"
+                maxlength="200"
+                class="popup__container-input popup__container-input_type-description"
+              />
+              <span class="popup__container-input-error popup__container-input_type-description-error"></span>
+            </label>
             <button type="submit" class="popup__container-save-btn">
               Сохранить
             </button>
@@ -68,18 +82,29 @@
       <div class="popup popup_type-card">
         <div class="popup__container">
           <button type="button" class="popup__container-close-btn"></button>
-          <form name="edit" class="popup__container-form">
+          <form novalidate name="edit" class="popup__container-form">
             <h2 class="popup__container-title">Новое место</h2>
-            <input
-              name="name"
-              placeholder="Название"
-              class="popup__container-input popup__container-input_type-name"
-            />
-            <input
-              name="description"
-              placeholder="Ссылка на картинку"
-              class="popup__container-input popup__container-input_type-link"
-            />
+            <label class="popup__container-field">
+              <input
+                name="name"
+                required
+                minlength="2"
+                maxlength="30"
+                placeholder="Название"
+                class="popup__container-input popup__container-input_type-name"
+              />
+              <span class="popup__container-input-error popup__container-input_type-name-error"></span>
+            </label>
+            <label>
+              <input
+                name="link"
+                type="url"
+                required
+                placeholder="Ссылка на картинку"
+                class="popup__container-input popup__container-input_type-link"
+              />
+              <span class="popup__container-input-error popup__container-input_type-link-error"></span>
+            </label>
             <button type="submit" class="popup__container-save-btn">
               Создать
             </button>
@@ -115,6 +140,7 @@
         <button type="button" class="place-card__delete-btn"></button>
       </div>
     </template>
+    <script defer src="./scripts/validation.js"></script>
     <script defer src="./scripts/cards.js"></script>
     <script defer src="./scripts/popup.js"></script>
     <script defer src="./scripts/popupProfile.js"></script>
