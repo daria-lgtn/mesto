@@ -1,22 +1,20 @@
-function onEscapeKeyDown(container) {
-  return (event) => {
-    if (event.key === "Escape") {
-      container.classList.remove("popup_opened");
-    }
-  };
+function onEscapeKeyDown(event) {
+  if (event.key === "Escape") {
+    popupClose(event.target, event);
+  }
 }
 
 function popupClose(container, event) {
   if (!event || event.target === event.currentTarget) {
     container.classList.remove("popup_opened");
-    container.addEventListener("keydown", onEscapeKeyDown(container));
+    container.removeEventListener("keydown", onEscapeKeyDown);
   }
 }
 
 function popupOpen(container) {
   container.focus();
   container.classList.add("popup_opened");
-  container.addEventListener("keydown", onEscapeKeyDown(container));
+  container.addEventListener("keydown", onEscapeKeyDown);
 }
 
 function setInputValue(input, value) {
