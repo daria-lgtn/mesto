@@ -1,3 +1,25 @@
+import { FormValidator } from "./FormValidator.js";
+import { Card } from "./Card.js";
+
+const enableValidation = (options) => {
+  const formList = Array.from(document.querySelectorAll(options.formSelector));
+
+  formList.forEach((entry) => {
+    const form = new FormValidator(options, entry);
+    form.enableValidation();
+  });
+};
+
+enableValidation({
+  formSelector: ".popup__container-form",
+  inputSelector: ".popup__container-input",
+  submitButtonSelector: ".popup__container-save-btn",
+  inactiveButtonClass: "popup__container-save-btn_inactive",
+  inputErrorClass: "popup__container-input_error",
+  errorClass: "popup__container-input-error_active",
+  errorSelector: (name) => `.popup__container-input-${name}-error`,
+});
+
 function onEscapeKeyDown(event) {
   if (event.key === "Escape") {
     popupClose(event.target, event);
@@ -40,45 +62,15 @@ const popupCardInputLink = popupCardContainer.querySelector(
 );
 
 const cardsContainer = document.querySelector(".places");
-const templateCard = document
-  .querySelector("#place-card")
-  .content.querySelector(".place-card");
 
-function cardToggleLike(event) {
-  event.target.classList.toggle("place-card__description-like-btn_active");
-}
-
-function cardDelete(event) {
-  event.target.closest(".place-card").remove();
-}
-
-function createCardElement(info) {
-  const cardElement = templateCard.cloneNode(true);
-
-  cardElement.querySelector(".place-card__illustration").src = info.link;
-  cardElement.querySelector(
-    ".place-card__illustration"
-  ).alt = `Иллюстрация '${info.name}'`;
-  cardElement.querySelector(".place-card__description-title").textContent =
-    info.name;
-
-  cardElement
-    .querySelector(".place-card__description-like-btn")
-    .addEventListener("click", cardToggleLike);
-
-  cardElement
-    .querySelector(".place-card__delete-btn")
-    .addEventListener("click", cardDelete);
+function appendCard(container, info) {
+  const card = new Card(info, "place-card");
+  const cardElement = card.createCardElement();
 
   cardElement
     .querySelector(".place-card__illustration")
     .addEventListener("click", () => popupPreviewOpen(info));
 
-  return cardElement;
-}
-
-function appendCard(container, info) {
-  const cardElement = createCardElement(info);
   container.prepend(cardElement);
 }
 
