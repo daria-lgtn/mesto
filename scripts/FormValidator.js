@@ -24,7 +24,7 @@ export class FormValidator {
     this._toggleButtonState();
 
     this._inputList.forEach((input) => {
-      this._setInputEventListeners(input);
+      this._toggleInputStateHideError(input);
     });
   }
 
@@ -45,19 +45,27 @@ export class FormValidator {
   }
 
   _toggleInputState(input) {
-    const error = this._form.querySelector(this._errorSelector(input.name));
-
     if (!input.validity.valid) {
-      input.classList.add(this._inputErrorClass);
-
-      error.textContent = input.validationMessage;
-      error.classList.add(this._errorClass);
+      this._toggleInputStateShowError(input, input.validationMessage);
     } else {
-      input.classList.remove(this._inputErrorClass);
-
-      error.textContent = "";
-      error.classList.add(this._errorClass);
+      this._toggleInputStateHideError(input);
     }
+  }
+
+  _toggleInputStateShowError(input, message) {
+    const error = this._form.querySelector(this._errorSelector(input.name));
+    input.classList.add(this._inputErrorClass);
+
+    error.textContent = message;
+    error.classList.add(this._errorClass);
+  }
+
+  _toggleInputStateHideError(input) {
+    const error = this._form.querySelector(this._errorSelector(input.name));
+    input.classList.remove(this._inputErrorClass);
+
+    error.textContent = "";
+    error.classList.add(this._errorClass);
   }
 
   _toggleButtonState() {

@@ -41,11 +41,6 @@ function openPopup(container) {
   container.focus();
   container.classList.add("popup_opened");
   container.addEventListener("keydown", onEscapeKeyDown);
-
-  const forms = Array.from(container.querySelectorAll("form"));
-  forms.forEach((entry) => {
-    formValidators[entry.getAttribute("name")].resetValidation();
-  });
 }
 
 //  popupCard
@@ -72,6 +67,7 @@ function createCard(info) {
 }
 
 function openPopupCard(event) {
+  formValidators["card-edit"].resetValidation();
   openPopup(popupCardContainer, event);
 }
 
@@ -171,6 +167,7 @@ function openPopupProfile() {
   popupProfileInputDescription.value =
     pageProfileInputDescription.textContent.trim();
 
+  formValidators["profile-edit"].resetValidation();
   openPopup(popupProfileContainer);
 }
 
