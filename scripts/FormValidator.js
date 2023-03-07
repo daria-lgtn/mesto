@@ -13,19 +13,34 @@ export class FormValidator {
 
   enableValidation() {
     this._toggleButtonState();
+    this._setFormEventListeners();
 
+    this._inputList.forEach((input) => {
+      this._setInputEventListeners(input);
+    });
+  }
+
+  resetValidation() {
+    this._toggleButtonState();
+
+    this._inputList.forEach((input) => {
+      this._setInputEventListeners(input);
+    });
+  }
+
+  _setFormEventListeners() {
     this._form.addEventListener("submit", function (event) {
       event.preventDefault();
     });
+  }
 
-    this._inputList.forEach((input) => {
-      input.addEventListener("input", () => {
-        this._toggleInputState(input);
-        this._toggleButtonState();
-      });
-      input.addEventListener("change", () => {
-        this._toggleButtonState();
-      });
+  _setInputEventListeners(input) {
+    input.addEventListener("input", () => {
+      this._toggleInputState(input);
+      this._toggleButtonState();
+    });
+    input.addEventListener("change", () => {
+      this._toggleButtonState();
     });
   }
 
