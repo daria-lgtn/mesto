@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-    <link rel="stylesheet" href="./pages/index.css" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Место</title>
@@ -12,7 +11,7 @@
       <header class="header">
         <img
           class="header__logo"
-          src="./images/logo.svg"
+          src="<%=require('./images/logo.svg')%>"
           alt="Логотип 'Место'"
         />
       </header>
@@ -21,7 +20,7 @@
         <section class="traveller">
           <img
             class="traveller__illustration"
-            src="./images/traveller.jpg"
+            src="<%=require('./images/traveller.jpg')%>"
             alt="Фотография путешественника"
           />
           <div class="traveller__info">
@@ -124,11 +123,7 @@
         <div class="popup__container">
           <button type="button" class="popup__container-close-btn"></button>
           <div class="popup__container-preview">
-            <img
-              class="popup__container-preview-illustration"
-              src="./images/temple.png"
-              alt="Иллюстрация Куршской косы"
-            />
+            <img class="popup__container-preview-illustration" src="#" alt="" />
             <p class="popup__container-preview-name"></p>
           </div>
         </div>
@@ -148,8 +143,6 @@
         <button type="button" class="place-card__delete-btn"></button>
       </div>
     </template>
-    <script defer type="module" src="./scripts/FormValidator.js"></script>
-    <script defer type="module" src="./scripts/Card.js"></script>
-    <script defer type="module" src="./scripts/index.js"></script>
+    <!-- <script defer type="module" src="./scripts/index.js"></script> -->
   </body>
 </html>
