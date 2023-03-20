@@ -1,11 +1,11 @@
-import { Card } from "./components/Card.js";
-import { FormValidator } from "./components/FormValidator.js";
-import PopupWithForm from "./components/PopupWithForm.js";
-import PopupWithImage from "./components/PopupWithImage.js";
-import Section from "./components/Section.js";
-import UserInfo from "./components/UserInfo.js";
-import { initialCards } from "./utils/constants.js";
-import "./styles/index.css";
+import { Card } from "../components/Card.js";
+import { FormValidator } from "../components/FormValidator.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import Section from "../components/Section.js";
+import UserInfo from "../components/UserInfo.js";
+import { initialCards } from "../utils/constants.js";
+import "../styles/index.css";
 
 const formValidators = {};
 const enableValidation = (options) => {
@@ -33,36 +33,19 @@ enableValidation({
 //  popupCard
 
 const popupCardOpenButton = document.querySelector(".traveller__add-image-btn");
-const cardsContainer = document.querySelector(".places");
+
+const popupImage = new PopupWithImage(".popup_type-preview", {
+  imageSelector: ".popup__container-preview-illustration",
+  labelSelector: ".popup__container-preview-name",
+});
+popupImage.setEventListeners();
 
 function createCard(info) {
-  const popup = new PopupWithImage(".popup_type-preview", {
-    imageSelector: ".popup__container-preview-illustration",
-    labelSelector: ".popup__container-preview-name",
-  });
-  popup.setEventListeners();
-
-  const card = new Card(info, "place-card", popup.open.bind(popup));
+  const card = new Card(info, "place-card", popupImage.open.bind(popupImage));
   const cardElement = card.createCardElement();
 
   return cardElement;
 }
-
-function submitPopupCard(form) {
-  const data = {
-    name: form.get("name"),
-    link: form.get("link"),
-  };
-
-  const cardElement = createCard(data);
-  cardsContainer.prepend(cardElement);
-
-  formValidators["card-edit"].resetValidation();
-}
-
-const popupCard = new PopupWithForm(".popup_type-card", submitPopupCard);
-popupCard.setEventListeners();
-popupCardOpenButton.addEventListener("click", popupCard.open.bind(popupCard));
 
 const cardList = new Section(
   {
@@ -77,10 +60,34 @@ const cardList = new Section(
 
 cardList.renderItems();
 
+function submitPopupCard(form) {
+  const data = {
+    name: form.get("name"),
+    link: form.get("link"),
+  };
+
+  const cardElement = createCard(data);
+  cardList.addItem(cardElement);
+
+  formValidators["card-edit"].resetValidation();
+}
+
+const popupCard = new PopupWithForm(".popup_type-card", {
+  onSubmit: submitPopupCard,
+});
+popupCard.setEventListeners();
+popupCardOpenButton.addEventListener("click", popupCard.open.bind(popupCard));
+
 //  popupProfile
 
 const popupProfileOpenButton = document.querySelector(
   ".traveller__info-full-name-edit-btn"
+);
+const popupProfileInputName = document.querySelector(
+  ".popup__container-form .popup__container-input_type-name"
+);
+const popupProfileInputDescription = document.querySelector(
+  ".popup__container-form .popup__container-input_type-description"
 );
 
 const userInfo = new UserInfo({
@@ -88,20 +95,28 @@ const userInfo = new UserInfo({
   selectorDescription: ".traveller__info-description",
 });
 
+function openPopupProfile() {
+  const data = userInfo.getUserInfo();
+
+  popupProfileInputName.value = data.name.trim();
+  popupProfileInputDescription.value = data.description.trim();
+
+  formValidators["profile-edit"].resetValidation();
+}
+
 function submitPopupProfile(form) {
   userInfo.setUserInfo({
     name: form.get("name"),
     description: form.get("description"),
   });
-
-  formValidators["profile-edit"].resetValidation();
 }
 
-const popupProfile = new PopupWithForm(
-  ".popup_type-profile",
-  submitPopupProfile
-);
+const popupProfile = new PopupWithForm(".popup_type-profile", {
+  onSubmit: submitPopupProfile,
+  onOpen: openPopupProfile,
+});
 popupProfile.setEventListeners();
+
 popupProfileOpenButton.addEventListener(
   "click",
   popupProfile.open.bind(popupProfile)

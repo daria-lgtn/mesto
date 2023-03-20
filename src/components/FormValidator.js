@@ -21,7 +21,6 @@ export class FormValidator {
   }
 
   resetValidation() {
-    this._form.reset();
     this._toggleButtonState();
 
     this._inputList.forEach((input) => {
