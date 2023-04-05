@@ -56,16 +56,20 @@ export class FormValidator {
     const error = this._form.querySelector(this._errorSelector(input.name));
     input.classList.add(this._inputErrorClass);
 
-    error.textContent = message;
-    error.classList.add(this._errorClass);
+    if (error) {
+      error.textContent = message;
+      error.classList.add(this._errorClass);
+    }
   }
 
   _toggleInputStateHideError(input) {
     const error = this._form.querySelector(this._errorSelector(input.name));
     input.classList.remove(this._inputErrorClass);
 
-    error.textContent = "";
-    error.classList.add(this._errorClass);
+    if (error) {
+      error.textContent = "";
+      error.classList.add(this._errorClass);
+    }
   }
 
   _toggleButtonState() {

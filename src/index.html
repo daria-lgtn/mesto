@@ -18,11 +18,14 @@
 
       <main>
         <section class="traveller">
-          <img
-            class="traveller__illustration"
-            src="<%=require('./images/traveller.jpg')%>"
-            alt="Фотография путешественника"
-          />
+          <div class="traveller-image">
+            <img
+              class="traveller-image__illustration"
+              src="<%=require('./images/traveller.jpg')%>"
+              alt="Фотография путешественника"
+            />
+            <div class="traveller-image__edit"></div>
+          </div>
           <div class="traveller__info">
             <div class="traveller__info-full-name">
               <h1 class="traveller__info-full-name-label">Жак-Ив Кусто</h1>
@@ -115,6 +118,46 @@
             <button type="submit" class="popup__container-save-btn">
               Создать
             </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="popup popup_type-avatar" tabindex="0">
+        <div class="popup__container">
+          <button type="button" class="popup__container-close-btn"></button>
+          <form novalidate name="avatar-edit" class="popup__container-form">
+            <h2 class="popup__container-title">Обновить аватар</h2>
+            <label>
+              <input
+                name="link"
+                type="url"
+                required
+                placeholder="Ссылка на картинку"
+                class="popup__container-input popup__container-input_type-link"
+              />
+              <span
+                class="popup__container-input-error popup__container-input-link-error"
+              ></span>
+            </label>
+            <button type="submit" class="popup__container-save-btn">
+              Сохранить
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="popup popup_type-confirm" tabindex="0">
+        <div class="popup__container">
+          <button type="button" class="popup__container-close-btn"></button>
+          <form novalidate name="card-confirm" class="popup__container-form">
+            <h2 class="popup__container-title">Вы уверены?</h2>
+            <input
+              name="id"
+              required
+              type="hidden"
+              class="popup__container-input popup__container-input_type-id"
+            />
+            <button type="submit" class="popup__container-save-btn">Да</button>
           </form>
         </div>
       </div>

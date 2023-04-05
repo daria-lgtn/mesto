@@ -7,6 +7,7 @@ export default class UserInfo {
 
   getUserInfo() {
     return {
+      id: this._id,
       avatar: this._avatar.src,
       name: this._name.textContent.trim(),
       description: this._description.textContent.trim(),
@@ -18,7 +19,11 @@ export default class UserInfo {
     this._description.textContent = data.description.trim();
 
     if (data.avatar) {
-      this._avatar.src = data.avatar
+      this._avatar.src = data.avatar;
+    }
+
+    if (data.id) {
+      this._id = data.id;
     }
   }
 }

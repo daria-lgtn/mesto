@@ -1,3 +1,4 @@
+import { api } from "../components/Api.js";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
@@ -5,13 +6,10 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import "../styles/index.css";
-import { authorization, cohortId } from "../utils/constants.js";
-
 
 //________________________________________________________________________________
 //________________________________________  validation
 //________________________________________________________________________________
-
 
 const formValidators = {};
 const enableValidation = (options) => {
@@ -36,13 +34,142 @@ enableValidation({
   errorSelector: (name) => `.popup__container-input-${name}-error`,
 });
 
+//________________________________________________________________________________
+//________________________________________  popupProfile avatar
+//________________________________________________________________________________
+
+const popupProfileAvatarOpenButton = document.querySelector(".traveller-image");
+const popupProfileAvatarInputLink = document.querySelector(
+  ".popup_type-avatar .popup__container-input_type-link"
+);
+
+function openPopupAvatarProfile() {
+  const data = userInfo.getUserInfo();
+
+  popupProfileAvatarInputLink.value = data.avatar;
+
+  formValidators["avatar-edit"].resetValidation();
+}
+
+function submitPopupAvatarProfile(form) {
+  return api
+    .profileAvatarUpdate({
+      avatar: form.get("link"),
+    })
+    .then((result) => {
+      userInfo.setUserInfo({
+        name: result.name,
+        description: result.about,
+        avatar: result.avatar,
+      });
+    });
+}
+
+const popupProfileAvatar = new PopupWithForm(".popup_type-avatar", {
+  onSubmit: submitPopupAvatarProfile,
+  onOpen: openPopupAvatarProfile,
+});
+popupProfileAvatar.setEventListeners();
+
+popupProfileAvatarOpenButton.addEventListener(
+  "click",
+  popupProfileAvatar.open.bind(popupProfileAvatar)
+);
+//________________________________________________________________________________
+//________________________________________  popupProfile
+//________________________________________________________________________________
+
+api.me().then((result) => {
+  userInfo.setUserInfo({
+    name: result.name,
+    description: result.about,
+    avatar: result.avatar,
+    id: result._id,
+  });
+});
+
+const popupProfileOpenButton = document.querySelector(
+  ".traveller__info-full-name-edit-btn"
+);
+const popupProfileInputName = document.querySelector(
+  ".popup__container-form .popup__container-input_type-name"
+);
+const popupProfileInputDescription = document.querySelector(
+  ".popup__container-form .popup__container-input_type-description"
+);
+
+const userInfo = new UserInfo({
+  selectorName: ".traveller__info-full-name-label",
+  selectorAvatar: ".traveller-image__illustration",
+  selectorDescription: ".traveller__info-description",
+});
+
+function openPopupProfile() {
+  const data = userInfo.getUserInfo();
+
+  popupProfileInputName.value = data.name.trim();
+  popupProfileInputDescription.value = data.description.trim();
+
+  formValidators["profile-edit"].resetValidation();
+}
+
+function submitPopupProfile(form) {
+  return api
+    .profileUpdate({
+      name: form.get("name"),
+      about: form.get("description"),
+    })
+    .then((result) => {
+      userInfo.setUserInfo({
+        name: result.name,
+        description: result.about,
+        avatar: result.avatar,
+      });
+    });
+}
+
+const popupProfile = new PopupWithForm(".popup_type-profile", {
+  onSubmit: submitPopupProfile,
+  onOpen: openPopupProfile,
+});
+popupProfile.setEventListeners();
+
+popupProfileOpenButton.addEventListener(
+  "click",
+  popupProfile.open.bind(popupProfile)
+);
 
 //________________________________________________________________________________
-//________________________________________  popupCard
+//________________________________________  popupCard confirm
 //________________________________________________________________________________
 
+const popupConfirmInputId = document.querySelector(
+  ".popup__container-form .popup__container-input_type-id"
+);
 
-const popupCardOpenButton = document.querySelector(".traveller__add-image-btn");
+function openPopupSubmit(data) {
+  popupConfirmInputId.value = data.id;
+
+  formValidators["card-confirm"].resetValidation();
+}
+
+function submitDeleteCard(form, data) {
+  const id = form.get("id");
+  return api.cardDelete(id).then(() => {
+    data.onConfirm();
+    formValidators["card-edit"].resetValidation();
+  });
+}
+
+const popupConfirm = new PopupWithForm(".popup_type-confirm", {
+  onSubmit: submitDeleteCard,
+  onOpen: openPopupSubmit,
+});
+popupConfirm.setEventListeners();
+
+//________________________________________________________________________________
+//________________________________________  popupCard image
+//________________________________________________________________________________
 
 const popupImage = new PopupWithImage(".popup_type-preview", {
   imageSelector: ".popup__container-preview-illustration",
@@ -50,8 +177,43 @@ const popupImage = new PopupWithImage(".popup_type-preview", {
 });
 popupImage.setEventListeners();
 
+//________________________________________________________________________________
+//________________________________________  popupCard submit
+//________________________________________________________________________________
+
+function submitPopupCard(form) {
+  return api
+    .cardSubmit({
+      name: form.get("name"),
+      link: form.get("link"),
+    })
+    .then((result) => {
+      const cardElement = createCard(result);
+      cardList.addItem(cardElement);
+
+      formValidators["card-edit"].resetValidation();
+    });
+}
+
+const popupCard = new PopupWithForm(".popup_type-card", {
+  onSubmit: submitPopupCard,
+});
+popupCard.setEventListeners();
+
+const popupCardOpenButton = document.querySelector(".traveller__add-image-btn");
+popupCardOpenButton.addEventListener("click", popupCard.open.bind(popupCard));
+
+//________________________________________________________________________________
+//________________________________________  popupCard list
+//________________________________________________________________________________
+
 function createCard(info) {
-  const card = new Card(info, "place-card", popupImage.open.bind(popupImage));
+  const card = new Card(info, {
+    me: userInfo.getUserInfo().id,
+    selector: "place-card",
+    handleCardClick: popupImage.open.bind(popupImage),
+    handleCardDelete: popupConfirm.open.bind(popupConfirm),
+  });
   const cardElement = card.createCardElement();
 
   return cardElement;
@@ -67,112 +229,7 @@ const cardList = new Section(
   ".places"
 );
 
-fetch(`https://mesto.nomoreparties.co/v1/${cohortId}/cards`, {
-  headers: { authorization }
-})
-  .then(res => res.json())
-  .then((result) => {
-    console.log(result)
-    cardList.renderItems(result);
-  });
-
-
-function submitPopupCard(form) {
-  fetch(`https://nomoreparties.co/v1/${cohortId}/cards`, {
-    method: 'POST',
-    headers: { authorization, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: form.get("name"),
-      link: form.get("link"),
-    })
-  })
-    .then(res => res.json())
-    .then((result) => {
-      // console.log(result)
-      const cardElement = createCard(result);
-      cardList.addItem(cardElement);
-    });
-
-  formValidators["card-edit"].resetValidation();
-}
-
-const popupCard = new PopupWithForm(".popup_type-card", {
-  onSubmit: submitPopupCard,
+api.cardGetAll().then((result) => {
+  console.log(result);
+  cardList.renderItems(result);
 });
-popupCard.setEventListeners();
-popupCardOpenButton.addEventListener("click", popupCard.open.bind(popupCard));
-
-
-//________________________________________________________________________________
-//________________________________________  popupProfile
-//________________________________________________________________________________
-
-
-fetch(`https://nomoreparties.co/v1/${cohortId}/users/me`, {
-  headers: { authorization }
-})
-  .then(res => res.json())
-  .then((result) => {
-    // console.log(result)
-    userInfo.setUserInfo({
-      name: result.name,
-      description: result.about,
-      avatar: result.avatar
-    });
-  });
-
-const popupProfileOpenButton = document.querySelector(
-  ".traveller__info-full-name-edit-btn"
-);
-const popupProfileInputName = document.querySelector(
-  ".popup__container-form .popup__container-input_type-name"
-);
-const popupProfileInputDescription = document.querySelector(
-  ".popup__container-form .popup__container-input_type-description"
-);
-
-const userInfo = new UserInfo({
-  selectorName: ".traveller__info-full-name-label",
-  selectorAvatar: ".traveller__illustration",
-  selectorDescription: ".traveller__info-description",
-});
-
-function openPopupProfile() {
-  const data = userInfo.getUserInfo();
-
-  popupProfileInputName.value = data.name.trim();
-  popupProfileInputDescription.value = data.description.trim();
-
-  formValidators["profile-edit"].resetValidation();
-}
-
-function submitPopupProfile(form) {
-  fetch(`https://nomoreparties.co/v1/${cohortId}/users/me`, {
-    method: 'PATCH',
-    headers: { authorization, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: form.get("name"),
-      about: form.get("description")
-    })
-  })
-    .then(res => res.json())
-    .then((result) => {
-      // console.log(result)
-      userInfo.setUserInfo({
-        name: result.name,
-        description: result.about,
-        avatar: result.avatar
-      });
-    });
-}
-
-const popupProfile = new PopupWithForm(".popup_type-profile", {
-  onSubmit: submitPopupProfile,
-  onOpen: openPopupProfile,
-});
-popupProfile.setEventListeners();
-
-popupProfileOpenButton.addEventListener(
-  "click",
-  popupProfile.open.bind(popupProfile)
-);

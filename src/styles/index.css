@@ -23,7 +23,9 @@
 
 @import url(../blocks/traveller/traveller.css);
 @import url(../blocks/traveller/__add-image-btn/traveller__add-image-btn.css);
-@import url(../blocks/traveller/__illustration/traveller__illustration.css);
+@import url(../blocks/traveller-image/traveller-image.css);
+@import url(../blocks/traveller-image/__edit/traveller-image__edit.css);
+@import url(../blocks/traveller-image/__illustration/traveller-image__illustration.css);
 @import url(../blocks/traveller/__info-description/traveller__info-description.css);
 @import url(../blocks/traveller/__info-full-name-edit-btn/traveller__info-full-name-edit-btn.css);
 @import url(../blocks/traveller/__info-full-name-label/traveller__info-full-name-label.css);
