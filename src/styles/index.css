@@ -13,7 +13,9 @@
 @import url(../blocks/places/places.css);
 @import url(../blocks/place-card/place-card.css);
 @import url(../blocks/place-card/__delete-btn/place-card__delete-btn.css);
+@import url(../blocks/place-card/__description-like/place-card__description-like.css);
 @import url(../blocks/place-card/__description-like-btn/place-card__description-like-btn.css);
+@import url(../blocks/place-card/__description-like-count/place-card__description-like-count.css);
 @import url(../blocks/place-card/__description-like-btn/_active/place-card__description-like-btn_active.css);
 @import url(../blocks/place-card/__description-title/place-card__description-title.css);
 @import url(../blocks/place-card/__description/place-card__description.css);

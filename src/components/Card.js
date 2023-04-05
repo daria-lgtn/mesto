@@ -2,6 +2,7 @@ export class Card {
   constructor(data, selector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
+    this._likes = data.likes.length;
 
     this._selector = selector;
     this._handleCardClick = handleCardClick;
@@ -26,6 +27,7 @@ export class Card {
 
   _setData() {
     this._cardElementIllustration.src = this._link;
+    this._cardElementLikeCount.textContent = this._likes;
     this._cardElementIllustration.alt = `Иллюстрация '${this._name}'`;
     this._cardElementTitle.textContent = this._name;
   }
@@ -46,6 +48,9 @@ export class Card {
     this._cardElement = this._getTemplateNode();
     this._cardElementButtonLike = this._cardElement.querySelector(
       ".place-card__description-like-btn"
+    );
+    this._cardElementLikeCount = this._cardElement.querySelector(
+      ".place-card__description-like-count"
     );
     this._cardElementButtonDelete = this._cardElement.querySelector(
       ".place-card__delete-btn"

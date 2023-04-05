@@ -4,8 +4,14 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
-import { initialCards } from "../utils/constants.js";
 import "../styles/index.css";
+import { authorization, cohortId } from "../utils/constants.js";
+
+
+//________________________________________________________________________________
+//________________________________________  validation
+//________________________________________________________________________________
+
 
 const formValidators = {};
 const enableValidation = (options) => {
@@ -30,7 +36,11 @@ enableValidation({
   errorSelector: (name) => `.popup__container-input-${name}-error`,
 });
 
-//  popupCard
+
+//________________________________________________________________________________
+//________________________________________  popupCard
+//________________________________________________________________________________
+
 
 const popupCardOpenButton = document.querySelector(".traveller__add-image-btn");
 
@@ -49,7 +59,6 @@ function createCard(info) {
 
 const cardList = new Section(
   {
-    data: initialCards,
     renderer: (item) => {
       const cardElement = createCard(item);
       cardList.addItem(cardElement);
@@ -58,16 +67,31 @@ const cardList = new Section(
   ".places"
 );
 
-cardList.renderItems();
+fetch(`https://mesto.nomoreparties.co/v1/${cohortId}/cards`, {
+  headers: { authorization }
+})
+  .then(res => res.json())
+  .then((result) => {
+    console.log(result)
+    cardList.renderItems(result);
+  });
+
 
 function submitPopupCard(form) {
-  const data = {
-    name: form.get("name"),
-    link: form.get("link"),
-  };
-
-  const cardElement = createCard(data);
-  cardList.addItem(cardElement);
+  fetch(`https://nomoreparties.co/v1/${cohortId}/cards`, {
+    method: 'POST',
+    headers: { authorization, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: form.get("name"),
+      link: form.get("link"),
+    })
+  })
+    .then(res => res.json())
+    .then((result) => {
+      // console.log(result)
+      const cardElement = createCard(result);
+      cardList.addItem(cardElement);
+    });
 
   formValidators["card-edit"].resetValidation();
 }
@@ -78,7 +102,24 @@ const popupCard = new PopupWithForm(".popup_type-card", {
 popupCard.setEventListeners();
 popupCardOpenButton.addEventListener("click", popupCard.open.bind(popupCard));
 
-//  popupProfile
+
+//________________________________________________________________________________
+//________________________________________  popupProfile
+//________________________________________________________________________________
+
+
+fetch(`https://nomoreparties.co/v1/${cohortId}/users/me`, {
+  headers: { authorization }
+})
+  .then(res => res.json())
+  .then((result) => {
+    // console.log(result)
+    userInfo.setUserInfo({
+      name: result.name,
+      description: result.about,
+      avatar: result.avatar
+    });
+  });
 
 const popupProfileOpenButton = document.querySelector(
   ".traveller__info-full-name-edit-btn"
@@ -92,6 +133,7 @@ const popupProfileInputDescription = document.querySelector(
 
 const userInfo = new UserInfo({
   selectorName: ".traveller__info-full-name-label",
+  selectorAvatar: ".traveller__illustration",
   selectorDescription: ".traveller__info-description",
 });
 
@@ -105,10 +147,23 @@ function openPopupProfile() {
 }
 
 function submitPopupProfile(form) {
-  userInfo.setUserInfo({
-    name: form.get("name"),
-    description: form.get("description"),
-  });
+  fetch(`https://nomoreparties.co/v1/${cohortId}/users/me`, {
+    method: 'PATCH',
+    headers: { authorization, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: form.get("name"),
+      about: form.get("description")
+    })
+  })
+    .then(res => res.json())
+    .then((result) => {
+      // console.log(result)
+      userInfo.setUserInfo({
+        name: result.name,
+        description: result.about,
+        avatar: result.avatar
+      });
+    });
 }
 
 const popupProfile = new PopupWithForm(".popup_type-profile", {
