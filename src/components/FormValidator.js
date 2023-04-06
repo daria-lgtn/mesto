@@ -20,6 +20,11 @@ export class FormValidator {
     });
   }
 
+  clearValidation() {
+    this._form.reset();
+    this.resetValidation();
+  }
+
   resetValidation() {
     this._toggleButtonState();
 

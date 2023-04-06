@@ -1,4 +1,4 @@
-import { api } from "../components/Api.js";
+import Api from "../components/Api.js";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
@@ -6,6 +6,12 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import "../styles/index.css";
+import { authorization, cohortId } from "../utils/constants.js";
+
+const api = new Api({
+  cohortId,
+  authorization,
+});
 
 //________________________________________________________________________________
 //________________________________________  validation
@@ -39,19 +45,12 @@ enableValidation({
 //________________________________________________________________________________
 
 const popupProfileAvatarOpenButton = document.querySelector(".traveller-image");
-const popupProfileAvatarInputLink = document.querySelector(
-  ".popup_type-avatar .popup__container-input_type-link"
-);
 
 function openPopupAvatarProfile() {
-  const data = userInfo.getUserInfo();
-
-  popupProfileAvatarInputLink.value = data.avatar;
-
   formValidators["avatar-edit"].resetValidation();
 }
 
-function submitPopupAvatarProfile(form) {
+function submitPopupAvatarProfile(form, { onFinally }) {
   return api
     .profileAvatarUpdate({
       avatar: form.get("link"),
@@ -62,6 +61,11 @@ function submitPopupAvatarProfile(form) {
         description: result.about,
         avatar: result.avatar,
       });
+    })
+    .catch((e) => console.log(e))
+    .finally(() => {
+      formValidators["avatar-edit"].clearValidation();
+      onFinally();
     });
 }
 
@@ -78,15 +82,6 @@ popupProfileAvatarOpenButton.addEventListener(
 //________________________________________________________________________________
 //________________________________________  popupProfile
 //________________________________________________________________________________
-
-api.me().then((result) => {
-  userInfo.setUserInfo({
-    name: result.name,
-    description: result.about,
-    avatar: result.avatar,
-    id: result._id,
-  });
-});
 
 const popupProfileOpenButton = document.querySelector(
   ".traveller__info-full-name-edit-btn"
@@ -113,7 +108,7 @@ function openPopupProfile() {
   formValidators["profile-edit"].resetValidation();
 }
 
-function submitPopupProfile(form) {
+function submitPopupProfile(form, { onFinally }) {
   return api
     .profileUpdate({
       name: form.get("name"),
@@ -125,6 +120,11 @@ function submitPopupProfile(form) {
         description: result.about,
         avatar: result.avatar,
       });
+    })
+    .catch((e) => console.log(e))
+    .finally(() => {
+      formValidators["profile-edit"].clearValidation();
+      onFinally();
     });
 }
 
@@ -153,12 +153,18 @@ function openPopupSubmit(data) {
   formValidators["card-confirm"].resetValidation();
 }
 
-function submitDeleteCard(form, data) {
+function submitDeleteCard(form, { data, onFinally }) {
   const id = form.get("id");
-  return api.cardDelete(id).then(() => {
-    data.onConfirm();
-    formValidators["card-edit"].resetValidation();
-  });
+  return api
+    .cardDelete(id)
+    .then(() => {
+      data.onConfirm();
+    })
+    .catch((e) => console.log(e))
+    .finally(() => {
+      formValidators["card-confirm"].clearValidation();
+      onFinally();
+    });
 }
 
 const popupConfirm = new PopupWithForm(".popup_type-confirm", {
@@ -181,7 +187,7 @@ popupImage.setEventListeners();
 //________________________________________  popupCard submit
 //________________________________________________________________________________
 
-function submitPopupCard(form) {
+function submitPopupCard(form, { onFinally }) {
   return api
     .cardSubmit({
       name: form.get("name"),
@@ -190,8 +196,11 @@ function submitPopupCard(form) {
     .then((result) => {
       const cardElement = createCard(result);
       cardList.addItem(cardElement);
-
-      formValidators["card-edit"].resetValidation();
+    })
+    .catch((e) => console.log(e))
+    .finally(() => {
+      formValidators["card-edit"].clearValidation();
+      onFinally();
     });
 }
 
@@ -207,12 +216,28 @@ popupCardOpenButton.addEventListener("click", popupCard.open.bind(popupCard));
 //________________________________________  popupCard list
 //________________________________________________________________________________
 
+function cardLike(id, callback) {
+  api
+    .cardLike(id)
+    .then(callback)
+    .catch((e) => console.log(e));
+}
+
+function cardLikeUndo(id, callback) {
+  api
+    .cardLikeUndo(id)
+    .then(callback)
+    .catch((e) => console.log(e));
+}
+
 function createCard(info) {
   const card = new Card(info, {
     me: userInfo.getUserInfo().id,
     selector: "place-card",
     handleCardClick: popupImage.open.bind(popupImage),
     handleCardDelete: popupConfirm.open.bind(popupConfirm),
+    handleCardLikeUndo: cardLikeUndo,
+    handleCardLike: cardLike,
   });
   const cardElement = card.createCardElement();
 
@@ -229,7 +254,18 @@ const cardList = new Section(
   ".places"
 );
 
-api.cardGetAll().then((result) => {
-  console.log(result);
-  cardList.renderItems(result);
-});
+Promise.all([
+  api.me().then((result) => {
+    userInfo.setUserInfo({
+      name: result.name,
+      description: result.about,
+      avatar: result.avatar,
+      id: result._id,
+    });
+  }),
+
+  api.cardGetAll().then((result) => {
+    console.log(result);
+    cardList.renderItems(result);
+  }),
+]).catch((e) => console.log(e));

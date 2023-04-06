@@ -1,15 +1,10 @@
-import { authorization, cohortId } from "../utils/constants.js";
-
-class Api {
+export default class Api {
   constructor({ cohortId, authorization }) {
     this._cohortId = cohortId;
     this._authorization = authorization;
-
-    this.loading = false;
   }
 
   _fetch({ url, method, body }) {
-    this.loading = true;
     return fetch(url, {
       method,
       headers: {
@@ -17,17 +12,14 @@ class Api {
         "Content-Type": "application/json",
       },
       body,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
 
-        // если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .catch((e) => console.log(e))
-      .finally(() => (this.loading = false));
+      // если ошибка, отклоняем промис
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
   }
 
   me() {
@@ -89,8 +81,3 @@ class Api {
     });
   }
 }
-
-export const api = new Api({
-  cohortId,
-  authorization,
-});

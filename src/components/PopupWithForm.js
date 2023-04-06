@@ -22,9 +22,12 @@ export default class PopupWithForm extends Popup {
       this._text = this._submitBtn.textContent.trim();
       this._submitBtn.textContent = "Сохранение...";
 
-      this._onSubmit(this._getInputValues(), this._data).then(() => {
-        this.close();
-        this._submitBtn.textContent = this._text;
+      this._onSubmit(this._getInputValues(), {
+        data: this._data,
+        onFinally: () => {
+          this.close();
+          this._submitBtn.textContent = this._text;
+        },
       });
     });
   }

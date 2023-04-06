@@ -1,7 +1,15 @@
-import { api } from "./Api";
-
 export class Card {
-  constructor(data, { me, selector, handleCardClick, handleCardDelete }) {
+  constructor(
+    data,
+    {
+      me,
+      selector,
+      handleCardClick,
+      handleCardLike,
+      handleCardLikeUndo,
+      handleCardDelete,
+    }
+  ) {
     this._me = me;
     this._id = data._id;
     this._name = data.name;
@@ -12,6 +20,8 @@ export class Card {
 
     this._selector = selector;
     this._handleCardClick = handleCardClick;
+    this._handleCardLike = handleCardLike;
+    this._handleCardLikeUndo = handleCardLikeUndo;
     this._handleCardDelete = handleCardDelete;
 
     this._likeClass = "place-card__description-like-btn_active";
@@ -26,14 +36,16 @@ export class Card {
     return templateCard;
   }
 
+  _cardLike() {}
+
   _cardToggleLike(event) {
     if (event.target.classList.contains(this._likeClass)) {
-      api.cardLikeUndo(this._id).then(() => {
+      this._handleCardLikeUndo(this._id, () => {
         event.target.classList.remove(this._likeClass);
         this._cardElementLikeCount.textContent = --this._likesCount;
       });
     } else {
-      api.cardLike(this._id).then(() => {
+      this._handleCardLike(this._id, () => {
         event.target.classList.add(this._likeClass);
         this._cardElementLikeCount.textContent = ++this._likesCount;
       });
@@ -51,7 +63,7 @@ export class Card {
     this._cardElementTitle.textContent = this._name;
 
     if (this._me !== this._owner) {
-      this._cardElementButtonDelete.style.display = "none";
+      this._cardElementButtonDelete.remove();
     }
 
     if (this._likes.find((e) => e._id === this._me)) {
