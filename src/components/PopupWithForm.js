@@ -24,7 +24,7 @@ export default class PopupWithForm extends Popup {
 
       this._onSubmit(this._getInputValues(), {
         data: this._data,
-        onFinally: () => {
+        onSuccess: () => {
           this.close();
           this._submitBtn.textContent = this._text;
         },

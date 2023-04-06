@@ -50,7 +50,7 @@ function openPopupAvatarProfile() {
   formValidators["avatar-edit"].resetValidation();
 }
 
-function submitPopupAvatarProfile(form, { onFinally }) {
+function submitPopupAvatarProfile(form, { onSuccess }) {
   return api
     .profileAvatarUpdate({
       avatar: form.get("link"),
@@ -61,12 +61,11 @@ function submitPopupAvatarProfile(form, { onFinally }) {
         description: result.about,
         avatar: result.avatar,
       });
-    })
-    .catch((e) => console.log(e))
-    .finally(() => {
+
       formValidators["avatar-edit"].clearValidation();
-      onFinally();
-    });
+      onSuccess();
+    })
+    .catch((e) => console.log(e));
 }
 
 const popupProfileAvatar = new PopupWithForm(".popup_type-avatar", {
@@ -108,7 +107,7 @@ function openPopupProfile() {
   formValidators["profile-edit"].resetValidation();
 }
 
-function submitPopupProfile(form, { onFinally }) {
+function submitPopupProfile(form, { onSuccess }) {
   return api
     .profileUpdate({
       name: form.get("name"),
@@ -120,12 +119,11 @@ function submitPopupProfile(form, { onFinally }) {
         description: result.about,
         avatar: result.avatar,
       });
-    })
-    .catch((e) => console.log(e))
-    .finally(() => {
+
       formValidators["profile-edit"].clearValidation();
-      onFinally();
-    });
+      onSuccess();
+    })
+    .catch((e) => console.log(e));
 }
 
 const popupProfile = new PopupWithForm(".popup_type-profile", {
@@ -153,18 +151,16 @@ function openPopupSubmit(data) {
   formValidators["card-confirm"].resetValidation();
 }
 
-function submitDeleteCard(form, { data, onFinally }) {
+function submitDeleteCard(form, { data, onSuccess }) {
   const id = form.get("id");
   return api
     .cardDelete(id)
     .then(() => {
       data.onConfirm();
-    })
-    .catch((e) => console.log(e))
-    .finally(() => {
       formValidators["card-confirm"].clearValidation();
-      onFinally();
-    });
+      onSuccess();
+    })
+    .catch((e) => console.log(e));
 }
 
 const popupConfirm = new PopupWithForm(".popup_type-confirm", {
@@ -187,7 +183,7 @@ popupImage.setEventListeners();
 //________________________________________  popupCard submit
 //________________________________________________________________________________
 
-function submitPopupCard(form, { onFinally }) {
+function submitPopupCard(form, { onSuccess }) {
   return api
     .cardSubmit({
       name: form.get("name"),
@@ -196,12 +192,10 @@ function submitPopupCard(form, { onFinally }) {
     .then((result) => {
       const cardElement = createCard(result);
       cardList.addItem(cardElement);
-    })
-    .catch((e) => console.log(e))
-    .finally(() => {
       formValidators["card-edit"].clearValidation();
-      onFinally();
-    });
+      onSuccess();
+    })
+    .catch((e) => console.log(e));
 }
 
 const popupCard = new PopupWithForm(".popup_type-card", {
@@ -254,18 +248,15 @@ const cardList = new Section(
   ".places"
 );
 
-Promise.all([
-  api.me().then((result) => {
+Promise.all([api.me(), api.cardGetAll()])
+  .then(([me, cards]) => {
     userInfo.setUserInfo({
-      name: result.name,
-      description: result.about,
-      avatar: result.avatar,
-      id: result._id,
+      name: me.name,
+      description: me.about,
+      avatar: me.avatar,
+      id: me._id,
     });
-  }),
 
-  api.cardGetAll().then((result) => {
-    console.log(result);
-    cardList.renderItems(result);
-  }),
-]).catch((e) => console.log(e));
+    cardList.renderItems(cards);
+  })
+  .catch((e) => console.log(e));
