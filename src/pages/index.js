@@ -50,7 +50,7 @@ function openPopupAvatarProfile() {
   formValidators["avatar-edit"].resetValidation();
 }
 
-function submitPopupAvatarProfile(form, { onSuccess }) {
+function submitPopupAvatarProfile(form, { onSuccess, onFinally }) {
   return api
     .profileAvatarUpdate({
       avatar: form.get("link"),
@@ -65,7 +65,8 @@ function submitPopupAvatarProfile(form, { onSuccess }) {
       formValidators["avatar-edit"].clearValidation();
       onSuccess();
     })
-    .catch((e) => console.log(e));
+    .catch((e) => console.log(e))
+    .finally(onFinally);
 }
 
 const popupProfileAvatar = new PopupWithForm(".popup_type-avatar", {
@@ -107,7 +108,7 @@ function openPopupProfile() {
   formValidators["profile-edit"].resetValidation();
 }
 
-function submitPopupProfile(form, { onSuccess }) {
+function submitPopupProfile(form, { onSuccess, onFinally }) {
   return api
     .profileUpdate({
       name: form.get("name"),
@@ -123,7 +124,8 @@ function submitPopupProfile(form, { onSuccess }) {
       formValidators["profile-edit"].clearValidation();
       onSuccess();
     })
-    .catch((e) => console.log(e));
+    .catch((e) => console.log(e))
+    .finally(onFinally);
 }
 
 const popupProfile = new PopupWithForm(".popup_type-profile", {
@@ -151,7 +153,7 @@ function openPopupSubmit(data) {
   formValidators["card-confirm"].resetValidation();
 }
 
-function submitDeleteCard(form, { data, onSuccess }) {
+function submitDeleteCard(form, { data, onSuccess, onFinally }) {
   const id = form.get("id");
   return api
     .cardDelete(id)
@@ -160,7 +162,8 @@ function submitDeleteCard(form, { data, onSuccess }) {
       formValidators["card-confirm"].clearValidation();
       onSuccess();
     })
-    .catch((e) => console.log(e));
+    .catch((e) => console.log(e))
+    .finally(onFinally);
 }
 
 const popupConfirm = new PopupWithForm(".popup_type-confirm", {
@@ -183,7 +186,7 @@ popupImage.setEventListeners();
 //________________________________________  popupCard submit
 //________________________________________________________________________________
 
-function submitPopupCard(form, { onSuccess }) {
+function submitPopupCard(form, { onSuccess, onFinally }) {
   return api
     .cardSubmit({
       name: form.get("name"),
@@ -195,7 +198,8 @@ function submitPopupCard(form, { onSuccess }) {
       formValidators["card-edit"].clearValidation();
       onSuccess();
     })
-    .catch((e) => console.log(e));
+    .catch((e) => console.log(e))
+    .finally(onFinally);
 }
 
 const popupCard = new PopupWithForm(".popup_type-card", {

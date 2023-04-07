@@ -26,8 +26,10 @@ export default class PopupWithForm extends Popup {
         data: this._data,
         onSuccess: () => {
           this.close();
-          this._submitBtn.textContent = this._text;
         },
+        onFinally: () => {
+          this._submitBtn.textContent = this._text;
+        }
       });
     });
   }
